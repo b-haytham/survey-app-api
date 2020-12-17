@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: organizations-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: organizations
+  template:
+    metadata:
+      labels:
+        app: organizations
+    spec:
+      containers:
+      - name: organizations
+        image: organizations
+        imagePullPolicy: Never
+        env:
+          - name: MONGO_URI
+            value: http://organizations-mongo-srv
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: organizations-srv
+spec:
+  selector:
+    app: organizations
+  ports:
+  - port: 80
+    targetPort: 3000
+

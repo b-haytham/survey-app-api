@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: organizations-mongo-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: organizations-db
+  template:
+    metadata:
+      labels:
+        app: organizations-db
+    spec:
+      containers:
+      - name: organizations-db
+        image: mongo
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: organizations-mongo-srv
+spec:
+  selector:
+    app: organizations-db
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 27017
