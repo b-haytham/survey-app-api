@@ -19,6 +19,17 @@ spec:
         env:
           - name: MONGO_URI
             value: http://organizations-mongo-srv
+          - name: JWT_SECRET
+            valueFrom:
+                secretKeyRef:
+                  name: jsonwebtoken-secret
+                  key: JWT_SECRET
+          - name: COOKIE_SECRET
+            valueFrom:
+                secretKeyRef:
+                  name: cookie-secret
+                  key: COOKIE_SECRET
+          
 ---
 
 apiVersion: v1
