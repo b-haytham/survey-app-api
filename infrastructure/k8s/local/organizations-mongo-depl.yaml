@@ -26,6 +26,6 @@ spec:
   selector:
     app: organizations-db
   ports:
-  - port: 80
+  - port: 27017
     protocol: TCP
     targetPort: 27017
