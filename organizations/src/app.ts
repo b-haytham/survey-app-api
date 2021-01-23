@@ -2,7 +2,8 @@ import express from 'express';
 import cookieSession from 'cookie-session';
 import { expressErrorHandler, NotFoundError } from '@dabra/survey_common';
 
-import  registerRouter  from './routes/register';
+import registerRouter  from './routes/register';
+import loginRouter from './routes/login'
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use(
 
 //app.get('/', (req, res) => res.send('hello'));
 app.use(registerRouter)
+app.use(loginRouter)
 
 app.all('*', () => {
 	console.log("Not Found");
