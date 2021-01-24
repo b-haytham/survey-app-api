@@ -23,7 +23,8 @@ router.post('/api/organizations/register', async (req, res,next)=> {
     const token = jwt.sign(
         {
             id: organization.id,
-            email: organization.email
+            email: organization.email,
+            role: organization.role
         },
         process.env.JWT_SECRET!
     )

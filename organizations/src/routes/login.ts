@@ -26,7 +26,8 @@ router.post('/api/organizations/login', async (req, res, next)=> {
 
     const token = jwt.sign({
         id: existingOrganization.id,
-        email: existingOrganization.email
+        email: existingOrganization.email,
+        role: existingOrganization.role
     },
         process.env.JWT_SECRET!
     )
