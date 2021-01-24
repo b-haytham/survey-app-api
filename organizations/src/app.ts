@@ -5,6 +5,7 @@ import { expressErrorHandler, NotFoundError } from '@dabra/survey_common';
 import registerRouter  from './routes/register';
 import loginRouter from './routes/login'
 import logoutRouter from './routes/logout'
+import currentUserRouter from './routes/currentUser'
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use(
 );
 
 //app.get('/', (req, res) => res.send('hello'));
+app.use(currentUserRouter )
 app.use(registerRouter)
 app.use(loginRouter)
 app.use(logoutRouter)
