@@ -39,7 +39,7 @@ questionTypesSchema.statics.build = (attrs: QuestionTypesAttr) => {
 };
 
 const QuestionType = mongoose.model<QuestionTypesDoc, QuestionTypesModel>(
-	'Admin',
+	'QuestionType',
 	questionTypesSchema
 );
 
