@@ -5,6 +5,7 @@ import { expressErrorHandler, NotFoundError } from '@dabra/survey_common';
 import createAdminRouter from './routes/createAdmin'
 import loginRouter from './routes/login'
 import logoutRouter from './routes/logout'
+import currentAdmin from './routes/currentAdmin'
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.get('/api/admins', (req, res) => res.send('hello [admins]'));
 app.use(createAdminRouter)
 app.use(loginRouter)
 app.use(logoutRouter)
+app.use(currentAdmin)
 
 
 app.all('*', () => {
