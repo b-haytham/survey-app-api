@@ -31,3 +31,10 @@ spec:
                 name: admins-srv
                 port:
                   number: 3000
+          - path: /api/survey/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: survey-srv
+                port:
+                  number: 3000
