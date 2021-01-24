@@ -15,3 +15,4 @@ export * from './middlewares/requireSuperAdmin'
 
 
 export * from './UserRoles';
+export * from './QuestionTypesEnum'
