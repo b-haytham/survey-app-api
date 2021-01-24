@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: admins-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: admins
+  template:
+    metadata:
+      labels:
+        app: admins
+    spec:
+      containers:
+      - name: admins
+        image: admins
+        imagePullPolicy: Never
+        env:
+          - name: MONGO_URI
+            value: mongodb://admins-mongo-srv:27017
+          - name: JWT_SECRET
+            valueFrom:
+                secretKeyRef:
+                  name: jsonwebtoken-secret
+                  key: JWT_SECRET
+          - name: COOKIE_SECRET
+            valueFrom:
+                secretKeyRef:
+                  name: cookie-secret
+                  key: COOKIE_SECRET
+          
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: admins-srv
+spec:
+  selector:
+    app: admins
+  ports:
+  - port: 3000
+    protocol: TCP
+    targetPort: 3000
+
