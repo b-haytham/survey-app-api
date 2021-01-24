@@ -2,6 +2,6 @@ import express from 'express';
 
 const app = express();
 
-app.get('/', (req, res) => res.send('hello [users]'));
+app.get('/api/users', (req, res) => res.send('hello [users]'));
 
 export default app;
