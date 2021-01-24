@@ -38,7 +38,7 @@ metadata:
   name: survey-srv
 spec:
   selector:
-    app: users
+    app: survey
   ports:
   - port: 3000
     protocol: TCP
