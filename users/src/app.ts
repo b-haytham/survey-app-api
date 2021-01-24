@@ -4,6 +4,7 @@ import { expressErrorHandler, NotFoundError } from '@dabra/survey_common';
 
 
 import registerRouter from './routes/register'
+import loginRouter from './routes/login'
 
 const app = express();
 
@@ -21,6 +22,8 @@ app.use(cookieSession({
 app.get('/api/users', (req, res) => res.send('hello [users]'));
 
 app.use(registerRouter)
+app.use(loginRouter)
+
 
 app.all('*', () => {
 	console.log("Not Found");

@@ -13,7 +13,8 @@ router.post('/api/users/register', async (req, res,next)=> {
 
     if(existingUser) {
         console.log("email in use");
-        throw new BadRequestError("E-mail exist")
+        //throw new BadRequestError("E-mail exist")
+        return next(new BadRequestError("E-mail exist"))
     }
 
     const user = User.build({email, password, name, isVerified: false, role: UserRoles.USER })
