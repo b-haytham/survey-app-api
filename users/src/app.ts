@@ -3,6 +3,8 @@ import cookieSession from 'cookie-session'
 import { expressErrorHandler, NotFoundError } from '@dabra/survey_common';
 
 
+import registerRouter from './routes/register'
+
 const app = express();
 
 app.set('trust proxy', true)
@@ -17,6 +19,8 @@ app.use(cookieSession({
 
 
 app.get('/api/users', (req, res) => res.send('hello [users]'));
+
+app.use(registerRouter)
 
 app.all('*', () => {
 	console.log("Not Found");
