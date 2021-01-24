@@ -1,4 +1,4 @@
-import { BadRequestError, currentUserMiddleware, requireAuth, requireSuperAdmin, UserRoles } from "@dabra/survey_common";
+import { BadRequestError, requireSuperAdmin, UserRoles } from "@dabra/survey_common";
 import { Router } from "express";
 import jwt from 'jsonwebtoken'
 
@@ -6,7 +6,7 @@ import Admin from "../models/Admin";
 
 const router = Router()
 
-router.post('/api/admins/new', currentUserMiddleware,requireSuperAdmin , async (req, res, next)=> {
+router.post('/api/admins/test' , async (req, res, next)=> {
     const { name, email, password } = req.body
 
     const existingAdmin = await Admin.findOne({email})
@@ -20,7 +20,7 @@ router.post('/api/admins/new', currentUserMiddleware,requireSuperAdmin , async (
         email,
         name,
         password,
-        role: UserRoles.ADMIN,
+        role: UserRoles.SUPER_ADMIN,
         isVerified: false
     })
 

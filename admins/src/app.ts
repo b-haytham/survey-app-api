@@ -6,6 +6,7 @@ import createAdminRouter from './routes/createAdmin'
 import loginRouter from './routes/login'
 import logoutRouter from './routes/logout'
 import currentAdmin from './routes/currentAdmin'
+import superAdminTest from './routes/SuperAdminTest'
 
 const app = express();
 
@@ -25,6 +26,7 @@ app.use(createAdminRouter)
 app.use(loginRouter)
 app.use(logoutRouter)
 app.use(currentAdmin)
+app.use(superAdminTest)
 
 
 app.all('*', () => {
