@@ -6,5 +6,6 @@ export * from './errors/NotFoundError';
 export * from './errors/RequestValidationError';
 
 export * from './middlewares/expressErrorHandler';
+export * from './middlewares/currentUserMiddleware'
 
 export * from './UserRoles';
