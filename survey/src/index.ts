@@ -1,7 +1,28 @@
+import { QuestionTypesEnum } from '@dabra/survey_common';
 import mongoose from 'mongoose'
 
 import app from './app';
 
+import QuestionType from './models/QuestionTypes';
+
+
+const seeder = async () => {
+	const data = await QuestionType.find({})
+	if(data.length !== 0) {
+		return
+	}
+
+	const result = await QuestionType.insertMany(
+		[
+			{ name: QuestionTypesEnum.MULTIPLE_SELECTION },
+			{ name: QuestionTypesEnum.NET_PROMOTER_SCORE },
+			{ name: QuestionTypesEnum.OPEN_ENDED },
+			{ name: QuestionTypesEnum.RATING_STARS },
+			{ name: QuestionTypesEnum.SINGLE_SELECTION }
+		]
+	)
+	console.log("SEEDED", "---", result)
+}
 
 const start = async () => {
 
@@ -25,6 +46,7 @@ const start = async () => {
 			useCreateIndex: true,
 		});
 		console.log('>>>> Connected to DB');
+		seeder()
 	} catch (error) {
 		console.error(error);
 	}
