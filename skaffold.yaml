@@ -16,3 +16,19 @@ build:
         manual: 
           - src: 'src/**/*.ts'
             dest: .
+    - image: users
+      context: users
+      docker:
+        dockerfile: Dockerfile
+      sync: 
+        manual: 
+          - src: 'src/**/*.ts'
+            dest: .
+    - image: admins
+      context: admins
+      docker:
+        dockerfile: Dockerfile
+      sync: 
+        manual: 
+          - src: 'src/**/*.ts'
+            dest: .

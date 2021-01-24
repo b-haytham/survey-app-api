@@ -1,6 +1,6 @@
 {
 	"name": "@dabra/survey_common",
-	"version": "1.0.0",
+	"version": "1.0.7",
 	"description": "",
 	"main": "./build/index.js",
 	"types": "./build/index.d.ts",
@@ -8,7 +8,8 @@
 		"build/**/*"
 	],
 	"scripts": {
-		"build": "tsc"
+		"build": "tsc",
+		"pub": "npm version patch && npm run build && npm publish"
 	},
 	"keywords": [],
 	"author": "b-haytham",

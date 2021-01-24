@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: organizations-depl
+  name: users-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: organizations
+      app: users
   template:
     metadata:
       labels:
-        app: organizations
+        app: users
     spec:
       containers:
-      - name: organizations
-        image: organizations
+      - name: users
+        image: users
         imagePullPolicy: Never
         env:
           - name: MONGO_URI
-            value: mongodb://organizations-mongo-srv:27017
+            value: mongodb://users-mongo-srv:27017
           - name: JWT_SECRET
             valueFrom:
                 secretKeyRef:
@@ -35,10 +35,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: organizations-srv
+  name: users-srv
 spec:
   selector:
-    app: organizations
+    app: users
   ports:
   - port: 3000
     protocol: TCP
