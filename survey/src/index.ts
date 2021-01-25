@@ -2,6 +2,20 @@ import { QuestionTypesEnum } from '@dabra/survey_common';
 import mongoose from 'mongoose'
 
 import app from './app';
+import { AdminCreatedListener } from './events/listeners/AdminCreatedListener';
+import { AdminDeletedListener } from './events/listeners/AdminDeletedListener';
+import { AdminUpdatedListener } from './events/listeners/AdminUpdatedListener';
+import { AdminVerifiedListener } from './events/listeners/AdminVerifiedListener';
+import { OrganizationCreatedListener } from './events/listeners/OrganizationCreatedListener';
+import { OrganizationDeletedListener } from './events/listeners/OrganizationDeletedListener';
+import { OrganizationUpdatedListener } from './events/listeners/OrganizationUpdatedListener';
+import { OrganizationVerifiedListener } from './events/listeners/OrganizationVerifiedListener';
+import { UserCreatedListener } from './events/listeners/UserCreatedListener';
+import { UserDeletedListener } from './events/listeners/UserDeletedListener';
+import { UserUpdatedListener } from './events/listeners/UserUpdatedListener';
+import { UserVerifiedListener } from './events/listeners/UserVerifiedListener';
+
+
 
 import QuestionType from './models/QuestionTypes';
 import { natsWrapper } from './NatsWrapper';
@@ -52,6 +66,20 @@ const start = async () => {
 		process.on("SIGTERM", () => natsWrapper.client.close());
 
 
+		new AdminCreatedListener(natsWrapper.client).listen()
+		new AdminUpdatedListener(natsWrapper.client).listen()
+		new AdminDeletedListener(natsWrapper.client).listen()
+		new AdminVerifiedListener(natsWrapper.client).listen()
+
+		new OrganizationCreatedListener(natsWrapper.client).listen()
+		new OrganizationUpdatedListener(natsWrapper.client).listen()
+		new OrganizationDeletedListener(natsWrapper.client).listen()
+		new OrganizationVerifiedListener(natsWrapper.client).listen()
+
+		new UserCreatedListener(natsWrapper.client).listen()
+		new UserUpdatedListener(natsWrapper.client).listen()
+		new UserDeletedListener(natsWrapper.client).listen()
+		new UserVerifiedListener(natsWrapper.client).listen()
 
 		await mongoose.connect(`${process.env.MONGO_URI}/survey`, {
 			useNewUrlParser: true,
