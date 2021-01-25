@@ -2,6 +2,8 @@ import express from 'express';
 import cookieSession from 'cookie-session'
 import { expressErrorHandler, NotFoundError } from '@dabra/survey_common';
 
+import getQuestionTypes from './routes/getQuestionTypes'
+
 const app = express();
 
 app.set('trust proxy', true)
@@ -14,8 +16,7 @@ app.use(cookieSession({
 	secret: process.env.COOKIE_SECRET,
 }))
 
-app.get('/', (req, res) => res.send('hello [survey_schema]'));
-
+app.use(getQuestionTypes)
 
 app.all('*', () => {
 	console.log("Not Found");
