@@ -4,18 +4,21 @@ import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 
 
 
-interface SchemaType extends Schema {
+export interface SchemaType extends Schema {
     surveySchema: {
         question: { type: QuestionTypesEnum, text: string }
         answer: number[] | string[]
     }[] 
 }
 
+
+
 interface SurveySchemaAttr {
 	title: string;
 	description: string;
-    creator: { type: "ORGANIZATION" | "ADMIN", id: string }
-    schema: SchemaType
+    creator: { type: "ORGANIZATION" | "ADMIN", orgId?: string, adminId?: string }
+    questions: any
+    answers: any
     isDraft: boolean
 }
 
@@ -27,10 +30,13 @@ interface SurveySchemaDoc extends mongoose.Document {
 	title: string;
 	description: string;
     creator: { type: "ORGANIZATION" | "ADMIN", orgId?: string, adminId?: string }
-    schema: SchemaType
+    questions: any
+    answers: any
     isDraft: boolean
     version: number
 }
+
+
 
 const surveySchema = new mongoose.Schema(
 	{
@@ -41,17 +47,15 @@ const surveySchema = new mongoose.Schema(
             orgId:  { type: Schema.Types.ObjectId, ref: 'Organization' },
             adminId: { type: Schema.Types.ObjectId, ref: 'Admin' }
         },
-		schema: {
-            surveySchema: [ 
-                { 
-                    question: {
-                        type: { type: String, required: true },
-                        text: { type: String, required: true }
-                    },
-                    answer: [ String ]
-                }
-            ]
-        },
+		questions: [ {
+            question: { 
+                type: { type: String, required: true }
+            },
+            text: { type: String, required: true }
+        } ],
+        answers: [ {
+            answers: [ String ] 
+        } ] ,
 		isDraft: { type: Boolean, required: true },
 	},
 	{

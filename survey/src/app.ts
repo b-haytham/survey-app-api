@@ -4,6 +4,8 @@ import { expressErrorHandler, NotFoundError } from '@dabra/survey_common';
 
 import getQuestionTypes from './routes/getQuestionTypes'
 
+import surveySchemaCreate from './routes/surveySchemaCreate'
+
 const app = express();
 
 app.set('trust proxy', true)
@@ -17,6 +19,7 @@ app.use(cookieSession({
 }))
 
 app.use(getQuestionTypes)
+app.use(surveySchemaCreate)
 
 app.all('*', () => {
 	console.log("Not Found");
