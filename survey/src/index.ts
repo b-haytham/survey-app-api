@@ -4,6 +4,7 @@ import mongoose from 'mongoose'
 import app from './app';
 
 import QuestionType from './models/QuestionTypes';
+import { natsWrapper } from './NatsWrapper';
 
 
 const seeder = async () => {
@@ -40,6 +41,18 @@ const start = async () => {
 	}
 
 	try {
+
+		await natsWrapper.connect('survey', 'survey-srv', 'http://nats-streaming-srv:4222')
+
+		natsWrapper.client.on('close', () => {
+			console.log("NATS Connection is Closed")
+		})
+
+		process.on("SIGINT", () => natsWrapper.client.close());
+		process.on("SIGTERM", () => natsWrapper.client.close());
+
+
+
 		await mongoose.connect(`${process.env.MONGO_URI}/survey`, {
 			useNewUrlParser: true,
 			useUnifiedTopology: true,
