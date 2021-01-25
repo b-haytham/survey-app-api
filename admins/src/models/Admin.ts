@@ -22,6 +22,7 @@ interface AdminDoc extends mongoose.Document {
 	password: string;
 	role: UserRoles;
 	isVerified: boolean
+	version: number
 }
 
 const adminSchema = new mongoose.Schema(
