@@ -3,7 +3,7 @@ import { Subjects } from "./Subjects";
 
 
 export interface AdminCreatedEvent {
-    subject: Subjects.USER_CREATED
+    subject: Subjects.ADMIN_CREATED
     data: {
         id: string
         name: string;
