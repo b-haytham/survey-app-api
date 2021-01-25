@@ -1,4 +1,5 @@
 export enum Subjects {
     ORGANIZATION_CREATED = "organization:created",
-    ORGANIZATION_UPDATED = "organization:updated"
+    USER_CREATED = "user:created",
+    ADMIN_CREATED = "admin:created"
 }
