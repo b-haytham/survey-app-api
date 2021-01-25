@@ -2,6 +2,8 @@ import { BadRequestError, UserRoles } from "@dabra/survey_common";
 import { Router } from "express";
 import User from "../models/User";
 import jwt from 'jsonwebtoken'
+import { UserCreatedPublisher } from "../events/UserCreatedPublisher";
+import { natsWrapper } from "../NatsWrapper";
 
 const router = Router()
 
@@ -20,6 +22,16 @@ router.post('/api/users/register', async (req, res,next)=> {
     const user = User.build({email, password, name, isVerified: false, role: UserRoles.USER })
 
     await user.save()
+
+    await new UserCreatedPublisher(natsWrapper.client).publish({
+        //@ts-ignore
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        role: user.role,
+        isVerified: user.isVerified,
+        version: user.version
+    })
 
     const token = jwt.sign(
         {
