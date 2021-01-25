@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from 'express';
 import { NotAuthorizedError } from '../errors/NotAuthorizedError';
 import { UserRoles } from '../UserRoles';
 
-export const requireOrganizationAdmin = (
+export const requireAnyOrganization = (
 	req: Request,
 	res: Response,
 	next: NextFunction
