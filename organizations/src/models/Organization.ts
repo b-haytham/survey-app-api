@@ -21,6 +21,7 @@ interface OrganizationDoc extends mongoose.Document {
 	password: string;
 	role: UserRoles;
 	isVerified: boolean
+	version: number
 }
 
 const organizationSchema = new mongoose.Schema(

@@ -6,6 +6,8 @@ import {
 import { Router } from "express";
 import Organization from "../models/Organization";
 import jwt from "jsonwebtoken";
+import { OrganizationCreatedPublisher } from "../events/OrganizationCreatedPublisher";
+import { natsWrapper } from "../NatsWrapper";
 
 const router = Router();
 
@@ -32,6 +34,16 @@ router.post(
     });
 
     await organization.save();
+
+    await new OrganizationCreatedPublisher(natsWrapper.client).publish({
+      //@ts-ignore
+      id: organization.id,
+      email:organization.email,
+      name: organization.name,
+      role: organization.role,
+      isVerified: organization.isVerified,
+      version: organization.version
+    })
 
     const token = jwt.sign(
       {
