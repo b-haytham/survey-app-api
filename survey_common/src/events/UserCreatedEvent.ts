@@ -9,6 +9,7 @@ export interface UserCreatedEvent {
         name: string;
         email: string;
         role: UserRoles;
-	    isVerified: boolean
+        isVerified: boolean
+        version: number
     }
 }
