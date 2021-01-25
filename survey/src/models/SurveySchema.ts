@@ -29,6 +29,7 @@ interface SurveySchemaDoc extends mongoose.Document {
     creator: { type: "ORGANIZATION" | "ADMIN", orgId?: string, adminId?: string }
     schema: SchemaType
     isDraft: boolean
+    version: number
 }
 
 const surveySchema = new mongoose.Schema(

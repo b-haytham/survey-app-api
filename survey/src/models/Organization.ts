@@ -6,7 +6,8 @@ import mongoose from 'mongoose';
 interface OrganizationAttr {
     orgId: string;
     role: UserRoles
-    version: number
+	version: number
+	isVerified: boolean
 }
 
 interface OrganizationModel extends mongoose.Model<OrganizationDoc> {
@@ -16,14 +17,16 @@ interface OrganizationModel extends mongoose.Model<OrganizationDoc> {
 interface OrganizationDoc extends mongoose.Document {
     orgId: string
     role: UserRoles
-    version: number
+	version: number
+	isVerified: boolean
 }
 
 const organizationSchema = new mongoose.Schema(
 	{
         orgId: { type: String, required: true },
         role: { type: String, required: true },
-        version: { type: String, required: true },
+		version: { type: String, required: true },
+		isVerified: { type: Boolean, required: true }
 	},
 	{
 		timestamps: true,

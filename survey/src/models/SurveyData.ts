@@ -21,7 +21,8 @@ interface SurveyDataModel extends mongoose.Model<SurveyDataDoc> {
 interface SurveyDataDoc extends mongoose.Document {
     surveySchemaId: string
     userId: string
-    data: SurveyDataType
+	data: SurveyDataType
+	version: number
 }
 
 const surveyDataSchema = new mongoose.Schema(

@@ -6,7 +6,8 @@ import mongoose from 'mongoose';
 interface AdminAttr {
     adminId: string;
     role: UserRoles
-    version: number
+	version: number
+	isVerified: boolean
 }
 
 interface AdminModel extends mongoose.Model<AdminDoc> {
@@ -16,14 +17,16 @@ interface AdminModel extends mongoose.Model<AdminDoc> {
 interface AdminDoc extends mongoose.Document {
     adminId: string
     version: number
-    role: UserRoles
+	role: UserRoles
+	isVerified: boolean
 }
 
 const adminSchema = new mongoose.Schema(
 	{
         adminId: { type: String, required: true },
         role: { type: String, required: true },
-        version: { type: String, required: true },
+		version: { type: String, required: true },
+		isVerified: { type: Boolean, required: true }
 	},
 	{
 		timestamps: true,
