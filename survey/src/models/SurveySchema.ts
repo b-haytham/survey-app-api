@@ -34,7 +34,7 @@ interface SurveySchemaDoc extends mongoose.Document {
 const surveySchema = new mongoose.Schema(
 	{
 		title: { type: String, required: true },
-		description: { type: Schema.Types.ObjectId, required: true },
+		description: { type: String, required: true },
 		creator: { 
             type: { type: String, required: true },
             orgId:  { type: Schema.Types.ObjectId, ref: 'Organization' },
