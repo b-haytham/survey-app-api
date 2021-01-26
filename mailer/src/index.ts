@@ -3,6 +3,18 @@ import mongoose from 'mongoose'
 import app from './app';
 import { natsWrapper } from './NatsWrapper';
 
+import { AdminCreatedListener } from './events/AdminCreatedListener';
+import { AdminUpdatedListener } from './events/AdminUpdatedListener';
+import { AdminDeletedListener } from './events/AdminDeletedListener';
+import { AdminVerifiedListener } from './events/AdminVerifiedListener';
+import { OrganizationCreatedListener } from './events/OrganizationCreatedListener';
+import { OrganizationUpdatedListener } from './events/OrganizationUpdatedListener';
+import { OrganizationDeletedListener } from './events/OrganizationDeletedListener';
+import { OrganizationVerifiedListener } from './events/OrganizationVerifiedListener';
+import { UserCreatedListener } from './events/UserCreatedListener';
+import { UserUpdatedListener } from './events/UserUpdatedListener';
+import { UserDeletedListener } from './events/UserDeletedListener';
+import { UserVerifiedListener } from './events/UserVerifiedListener';
 
 const start = async () => {
 
@@ -24,6 +36,20 @@ const start = async () => {
 			process.on("SIGTERM", () => natsWrapper.client.close());
 		}
 
+		new AdminCreatedListener(natsWrapper.client).listen()
+		new AdminUpdatedListener(natsWrapper.client).listen()
+		new AdminDeletedListener(natsWrapper.client).listen()
+		new AdminVerifiedListener(natsWrapper.client).listen()
+
+		new OrganizationCreatedListener(natsWrapper.client).listen()
+		new OrganizationUpdatedListener(natsWrapper.client).listen()
+		new OrganizationDeletedListener(natsWrapper.client).listen()
+		new OrganizationVerifiedListener(natsWrapper.client).listen()
+
+		new UserCreatedListener(natsWrapper.client).listen()
+		new UserUpdatedListener(natsWrapper.client).listen()
+		new UserDeletedListener(natsWrapper.client).listen()
+		new UserVerifiedListener(natsWrapper.client).listen()
 
 		await mongoose.connect(`${process.env.MONGO_URI}/mailer`, {
 			useNewUrlParser: true,
