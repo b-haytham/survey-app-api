@@ -7,6 +7,7 @@ import loginRouter from './routes/login'
 import logoutRouter from './routes/logout'
 import currentAdmin from './routes/currentAdmin'
 import superAdminTest from './routes/SuperAdminTest'
+import recoverPassword from './routes/recoverPassword'
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.use(loginRouter)
 app.use(logoutRouter)
 app.use(currentAdmin)
 app.use(superAdminTest)
+app.use(recoverPassword)
 
 
 app.all('*', () => {
