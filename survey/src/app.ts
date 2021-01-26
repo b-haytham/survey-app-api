@@ -10,6 +10,7 @@ import getSurveySchemaById from './routes/getSurveySchema'
 import getAllSurveySchema from './routes/getSurveySchemaAll'
 
 import surveyDataCreate from './routes/schemaDataCreate'
+import getSurveyDataBySchemaId from './routes/getSurveyDataBySchemaId'
 
 const app = express();
 
@@ -31,6 +32,7 @@ app.use(surveySchemaUpdate)
 app.use(surveySchemaCreate)
 
 app.use(surveyDataCreate)
+app.use(getSurveyDataBySchemaId)
 
 app.all('*', () => {
 	console.log("Not Found");
