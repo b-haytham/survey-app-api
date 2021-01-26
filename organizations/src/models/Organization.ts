@@ -1,5 +1,6 @@
-import { UserRoles } from '@dabra/survey_common';
+import crypto from 'crypto'
 import mongoose from 'mongoose';
+import { UserRoles } from '@dabra/survey_common';
 import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 import { Password } from '../utils/Password';
 
@@ -21,6 +22,8 @@ interface OrganizationDoc extends mongoose.Document {
 	password: string;
 	role: UserRoles;
 	isVerified: boolean
+	resetPasswordToken: string
+	resetPasswordExpires: Date
 	version: number
 }
 
@@ -31,6 +34,8 @@ const organizationSchema = new mongoose.Schema(
 		password: { type: String, required: true },
 		role: { type: String, required: true },
 		isVerified: { type: Boolean, required: true },
+		resetPasswordToken: { type: String, required: false },
+		resetPasswordExpires: { type: Date, required: false }
 	},
 	{
 		timestamps: true,
@@ -59,6 +64,15 @@ organizationSchema.pre('save', async function (done) {
 organizationSchema.statics.build = (attrs: OrganizationAttr) => {
 	return new Organization(attrs);
 };
+
+
+export const generatePasswordReset = () => {
+   return {
+	   resetPasswordToken: crypto.randomBytes(20).toString('hex'),
+	   resetPasswordExpires: Date.now() + 3600000 //expires in an hour
+   	} 
+};
+
 
 const Organization = mongoose.model<OrganizationDoc, OrganizationModel>(
 	'Organization',
