@@ -62,8 +62,10 @@ const start = async () => {
 			console.log("NATS Connection is Closed")
 		})
 
-		process.on("SIGINT", () => natsWrapper.client.close());
-		process.on("SIGTERM", () => natsWrapper.client.close());
+		if(process.env.NODE_ENV === 'production') {
+			process.on("SIGINT", () => natsWrapper.client.close());
+			process.on("SIGTERM", () => natsWrapper.client.close());
+		}
 
 
 		new AdminCreatedListener(natsWrapper.client).listen()
@@ -87,7 +89,11 @@ const start = async () => {
 			useCreateIndex: true,
 		});
 		console.log('>>>> Connected to DB');
-		seeder()
+
+		if(process.env.NODE_ENV !== 'production'){
+			seeder()
+		}
+		
 	} catch (error) {
 		console.error(error);
 	}
