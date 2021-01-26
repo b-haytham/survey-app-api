@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { AdminForgotPasswordPublisher } from "../events/AdminForgotPasswordPublisher";
 import { AdminUpdatedPublisher } from "../events/AdminUpdatedPublisher";
-import Admin from "../models/Admin";
+import Admin, { generatePasswordReset } from "../models/Admin";
 import { natsWrapper } from "../NatsWrapper";
 
 const router = Router()
@@ -14,7 +14,12 @@ router.post('/api/admins/recover', async (req, res, next) => {
         return res.status(200).send({})
     }
 
-    existingAdmin.generatePasswordReset()
+    const { resetPasswordExpires, resetPasswordToken } = generatePasswordReset()
+
+    existingAdmin.set({
+        resetPasswordExpires,
+        resetPasswordToken
+    })
 
     await existingAdmin.save()
 

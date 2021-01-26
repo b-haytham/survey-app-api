@@ -27,7 +27,6 @@ interface AdminDoc extends mongoose.Document {
 	resetPasswordToken?: string
 	resetPasswordExpires?: string
 	version: number
-	generatePasswordReset(): void
 }
 
 const adminSchema = new mongoose.Schema(
@@ -68,10 +67,13 @@ adminSchema.statics.build = (attrs: AdminAttr) => {
 	return new Admin(attrs);
 };
 
+ 
+export const generatePasswordReset = () => {
+    return {
+		resetPasswordToken: crypto.randomBytes(20).toString('hex'),
+		resetPasswordExpires: Date.now() + 3600000 //expires in an hour
 
-adminSchema.methods.generatePasswordReset = function() {
-    this.resetPasswordToken = crypto.randomBytes(20).toString('hex');
-    this.resetPasswordExpires = Date.now() + 3600000; //expires in an hour
+	} 
 };
 
 const Admin = mongoose.model<AdminDoc, AdminModel>(
