@@ -7,6 +7,7 @@ import getQuestionTypes from './routes/getQuestionTypes'
 import surveySchemaCreate from './routes/surveySchemaCreate'
 import surveySchemaUpdate from './routes/surveySchemaUpdate'
 import getSurveySchemaById from './routes/getSurveySchema'
+import getAllSurveySchema from './routes/getSurveySchemaAll'
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use(cookieSession({
 
 app.use(getQuestionTypes)
 app.use(getSurveySchemaById)
+app.use(getAllSurveySchema)
 app.use(surveySchemaUpdate)
 app.use(surveySchemaCreate)
 
