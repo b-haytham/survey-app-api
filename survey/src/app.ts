@@ -9,6 +9,8 @@ import surveySchemaUpdate from './routes/surveySchemaUpdate'
 import getSurveySchemaById from './routes/getSurveySchema'
 import getAllSurveySchema from './routes/getSurveySchemaAll'
 
+import surveyDataCreate from './routes/schemaDataCreate'
+
 const app = express();
 
 app.set('trust proxy', true)
@@ -22,10 +24,13 @@ app.use(cookieSession({
 }))
 
 app.use(getQuestionTypes)
+
 app.use(getSurveySchemaById)
 app.use(getAllSurveySchema)
 app.use(surveySchemaUpdate)
 app.use(surveySchemaCreate)
+
+app.use(surveyDataCreate)
 
 app.all('*', () => {
 	console.log("Not Found");
