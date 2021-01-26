@@ -25,8 +25,12 @@ const start = async () => {
 			console.log("NATS Connection is Closed")
 		})
 
-		process.on("SIGINT", () => natsWrapper.client.close());
-		process.on("SIGTERM", () => natsWrapper.client.close());
+
+		if(process.env.NODE_ENV === 'production') {
+			process.on("SIGINT", () => natsWrapper.client.close());
+			process.on("SIGTERM", () => natsWrapper.client.close());
+		}
+
 
 
 
