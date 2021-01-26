@@ -5,6 +5,7 @@ import { expressErrorHandler, NotFoundError } from '@dabra/survey_common';
 import getQuestionTypes from './routes/getQuestionTypes'
 
 import surveySchemaCreate from './routes/surveySchemaCreate'
+import surveySchemaUpdate from './routes/surveySchemaUpdate'
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use(cookieSession({
 }))
 
 app.use(getQuestionTypes)
+app.use(surveySchemaUpdate)
 app.use(surveySchemaCreate)
 
 app.all('*', () => {
