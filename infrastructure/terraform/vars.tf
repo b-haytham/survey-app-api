@@ -1,24 +1,34 @@
+variable "resource_group_name" {
+  type        = string
+  description = "RG name in Azure"
+  default = "survey-rg"
+}
+
 variable "location" {
-  type    = string
-  default = "East US"
+  type        = string
+  description = "Resources location in Azure"
+  default = "West Europe"
 }
 
-variable "kubernetes_version" {
-  default = "1.18.10"
+variable "cluster_name" {
+  type        = string
+  description = "AKS name in Azure"
+  default = "survey-app-aks"
 }
 
-variable "acr_sku" {
-  default = "Basic"
+# variable "kubernetes_version" {
+#   type        = string
+#   description = "Kubernetes version"
+# }
+
+variable "system_node_count" {
+  type        = number
+  description = "Number of AKS worker nodes"
+  default = 3
 }
 
-
-variable log_analytics_workspace_sku {
-  description = "The pricing SKU of the Log Analytics workspace."
-  default     = "PerGB2018"
-}
-
-
-variable "cluster-name" {
-  type    = string
-  default = "survey-app"
+variable "acr_name" {
+  type        = string
+  description = "ACR name"
+  default = "surveyappacr"
 }
