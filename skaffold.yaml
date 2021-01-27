@@ -32,3 +32,19 @@ build:
         manual: 
           - src: 'src/**/*.ts'
             dest: .
+    - image: survey
+      context: survey
+      docker:
+        dockerfile: Dockerfile
+      sync: 
+        manual: 
+          - src: 'src/**/*.ts'
+            dest: .
+    - image: mailer
+      context: mailer
+      docker:
+        dockerfile: Dockerfile
+      sync: 
+        manual: 
+          - src: 'src/**/*.ts'
+            dest: .

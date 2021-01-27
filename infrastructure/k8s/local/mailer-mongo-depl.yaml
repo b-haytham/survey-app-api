@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mailer-mongo-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mailer-db
+  template:
+    metadata:
+      labels:
+        app: mailer-db
+    spec:
+      containers:
+      - name: mailer-db
+        image: mongo
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: mailer-mongo-srv
+spec:
+  selector:
+    app: mailer-db
+  ports:
+  - port: 27017
+    protocol: TCP
+    targetPort: 27017

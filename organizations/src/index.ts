@@ -1,5 +1,6 @@
 import app from './app';
 import mongoose from 'mongoose';
+import { natsWrapper } from './NatsWrapper';
 
 const start = async () => {
 	if (!process.env.JWT_SECRET) {
@@ -15,6 +16,17 @@ const start = async () => {
 	}
 
 	try {
+
+		await natsWrapper.connect('survey', 'organization-srv', 'http://nats-streaming-srv:4222')
+
+		natsWrapper.client.on('close', () => {
+			console.log("NATS Connection is Closed")
+		})
+
+		process.on("SIGINT", () => natsWrapper.client.close());
+		process.on("SIGTERM", () => natsWrapper.client.close());
+
+
 		await mongoose.connect(`${process.env.MONGO_URI}/organizations`, {
 			useNewUrlParser: true,
 			useUnifiedTopology: true,

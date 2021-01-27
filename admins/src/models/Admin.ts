@@ -1,6 +1,8 @@
-import { UserRoles } from '@dabra/survey_common';
+import crypto from 'crypto'
 import mongoose from 'mongoose';
+import { UserRoles } from '@dabra/survey_common';
 import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
+
 import { Password } from '../utils/Password'
 
 
@@ -22,6 +24,9 @@ interface AdminDoc extends mongoose.Document {
 	password: string;
 	role: UserRoles;
 	isVerified: boolean
+	resetPasswordToken?: string
+	resetPasswordExpires?: string
+	version: number
 }
 
 const adminSchema = new mongoose.Schema(
@@ -31,6 +36,8 @@ const adminSchema = new mongoose.Schema(
 		password: { type: String, required: true },
 		role: { type: String, required: true },
 		isVerified: { type: Boolean, required: true },
+		resetPasswordToken: { type: String, required: false },
+		resetPasswordExpires: { type: Date, required: false }
 	},
 	{
 		timestamps: true,
@@ -58,6 +65,15 @@ adminSchema.pre('save', async function (done) {
 
 adminSchema.statics.build = (attrs: AdminAttr) => {
 	return new Admin(attrs);
+};
+
+ 
+export const generatePasswordReset = () => {
+    return {
+		resetPasswordToken: crypto.randomBytes(20).toString('hex'),
+		resetPasswordExpires: Date.now() + 3600000 //expires in an hour
+
+	} 
 };
 
 const Admin = mongoose.model<AdminDoc, AdminModel>(

@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: survey-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: survey
+  template:
+    metadata:
+      labels:
+        app: survey
+    spec:
+      containers:
+      - name: survey
+        image: <AZURE_CONTAINER_REGISTERY_SERVER>.azurecr.io/survey:v1
+        imagePullPolicy: Always
+        env:
+          - name: MONGO_URI
+            value: mongodb://survey-mongo-0.survey-mongo-svc,survey-mongo-1.survey-mongo-svc:27017
+          - name: JWT_SECRET
+            valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_SECRET
+          - name: COOKIE_SECRET
+            valueFrom:
+                secretKeyRef:
+                  name: cookie-secret
+                  key: COOKIE_SECRET

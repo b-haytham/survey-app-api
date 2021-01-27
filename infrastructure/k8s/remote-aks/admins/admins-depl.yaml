@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: admins-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: admins
+  template:
+    metadata:
+      labels:
+        app: admins
+    spec:
+      containers:
+      - name: admins
+        image: <AZURE_CONTAINER_REGISTERY_SERVER>.azurecr.io/admins:v1
+        imagePullPolicy: Always
+        env:
+          - name: MONGO_URI
+            value: mongodb://admin-mongo-0.admins-mongo-svc,admin-mongo-1.admins-mongo-svc:27017
+          - name: JWT_SECRET
+            valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_SECRET
+          - name: COOKIE_SECRET
+            valueFrom:
+                secretKeyRef:
+                  name: cookie-secret
+                  key: COOKIE_SECRET
