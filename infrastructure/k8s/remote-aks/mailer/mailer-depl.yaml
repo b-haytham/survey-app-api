@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mailer-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mailer
+  template:
+    metadata:
+      labels:
+        app: mailer
+    spec:
+      containers:
+      - name: mailer
+        image: <AZURE_CONTAINER_REGISTERY_SERVER>.azurecr.io/mailer:v1
+        imagePullPolicy: Always
+        env:
+          - name: MONGO_URI
+            value: mongodb://mailer-mongo-0.mailer-mongo-svc,mailer-mongo-1.mailer-mongo-svc:27017
+          - name: JWT_SECRET
+            valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_SECRET
+          - name: COOKIE_SECRET
+            valueFrom:
+                secretKeyRef:
+                  name: cookie-secret
+                  key: COOKIE_SECRET

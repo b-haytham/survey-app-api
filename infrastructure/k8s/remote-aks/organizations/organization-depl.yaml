@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: organizations-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: organizations
+  template:
+    metadata:
+      labels:
+        app: organizations
+    spec:
+      containers:
+      - name: organizations
+        image: <AZURE_CONTAINER_REGISTERY_SERVER>.azurecr.io/organizations:v1
+        imagePullPolicy: Always
+        env:
+          - name: MONGO_URI
+            value: mongodb://organization-mongo-0.organization-mongo-svc,organization-mongo-1.organization-mongo-svc:27017
+          - name: JWT_SECRET
+            valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_SECRET
+          - name: COOKIE_SECRET
+            valueFrom:
+                secretKeyRef:
+                  name: cookie-secret
+                  key: COOKIE_SECRET
