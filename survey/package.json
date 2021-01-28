@@ -4,7 +4,9 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"start": "ts-node-dev src/index.ts"
+		"start": "ts-node-dev src/index.ts",
+		"test:dev": "jest --watchAll --no-cache",
+		"test": "jest"
 	},
 	"jest": {
 		"preset": "ts-jest",
