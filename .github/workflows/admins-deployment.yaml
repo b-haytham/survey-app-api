@@ -29,6 +29,7 @@ jobs:
         working-directory: ./admins
       - name: Test
         run: npm test
+        working-directory: ./admins
   build:
     needs: test
     runs-on: ubuntu-latest
