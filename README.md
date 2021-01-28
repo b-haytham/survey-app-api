@@ -1,5 +1,5 @@
 # Survey app microservice 
-## Typescript, Expressjs, Docker,  Kubernetes (azure kubernetes service), Terraform, github actions
+## Typescript, Expressjs, mongodb, Docker,  Kubernetes (azure kubernetes service), Terraform, github actions
 
 
 
