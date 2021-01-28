@@ -1,0 +1,30 @@
+
+name: Publish @dabra/survey_common to npm
+
+on:
+  push:
+    paths:
+      - "survey_common/*"
+    branches:
+      - "prod"
+
+defaults:
+  run:
+    working-directory: survey_common
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        name: Checkout code 
+      - name: Setup Node 
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - name: Build project
+        run: npm run build
+      - name: Publish to npm
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
