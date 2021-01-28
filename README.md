@@ -75,7 +75,7 @@ after buiding images and stabilizing deployment test the app
 curl --header "Content-Type: application/json" \
   --request POST \
   --data '{"name":"name","password":"password", email: email@email.com}' \
-  http://localhost:3000/api/login
+  https://survey.dev/api/organizations/register
 ```
 
 ## Azure kubernetes service
