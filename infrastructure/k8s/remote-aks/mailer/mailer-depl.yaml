@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: mailer
-        image: <AZURE_CONTAINER_REGISTERY_SERVER>.azurecr.io/mailer:v1
+        image: surveyappacr.azurecr.io/mailer #change 'surveyappacr' with your <AZURE_CONTAINER_REGISTERY_SERVER>
         imagePullPolicy: Always
         env:
           - name: MONGO_URI

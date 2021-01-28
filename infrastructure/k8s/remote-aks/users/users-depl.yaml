@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: users
-        image: <AZURE_CONTAINER_REGISTERY_SERVER>.azurecr.io/users:v1
+        image: surveyappacr.azurecr.io/users #change 'surveyappacr' with your <AZURE_CONTAINER_REGISTERY_SERVER>
         imagePullPolicy: Always
         env:
           - name: MONGO_URI
