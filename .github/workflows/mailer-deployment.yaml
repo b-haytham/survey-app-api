@@ -1,0 +1,75 @@
+name: Mailer microservice deployment
+
+on:
+  push:
+    paths:
+      - "mailer/**"
+    branches:
+      - "prod"
+
+# Environment variables available to all jobs and steps in this workflow
+env:
+  REGISTRY_NAME: surveyappacr
+  CLUSTER_NAME: survey-app-aks
+  CLUSTER_RESOURCE_GROUP: survey-rg
+  APP_NAME: mailer
+  
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        name: Checkout code
+      - name: Setup Node 
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - name: Install dependencies
+        run: npm install
+        working-directory: ./mailer
+      - name: Test
+        run: npm test
+        working-directory: ./mailer
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        name: Checkout code
+      
+      # Connect to Azure Container registry (ACR)
+      - name: Connect to ACR
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ env.REGISTRY_NAME }}.azurecr.io
+          username: ${{ secrets.REGISTERY_USERNAME }} 
+          password: ${{ secrets.REGISTERY_PASSWORD }}
+      
+      # Container build and push to a Azure Container registry (ACR)
+      - name: Build and Push docker image
+        run: |
+          cd mailer
+          docker build . -t ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
+          docker push ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:  
+      
+      - uses: actions/checkout@v2
+        name: Checkout code
+
+      # Set the target Azure Kubernetes Service (AKS) cluster. 
+      - uses: azure/aks-set-context@v1
+        with:
+          creds: '${{ secrets.AZURE_CREDENTIALS }}'
+          cluster-name: ${{ env.CLUSTER_NAME }}
+          resource-group: ${{ env.CLUSTER_RESOURCE_GROUP }}
+      
+      # Deploy app to AKS
+      - uses: azure/k8s-deploy@v1
+        with:
+          manifests: |
+            infrastructure/k8s/remote-aks/mailer/mailer-depl.yaml
+          images: |
+            ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
