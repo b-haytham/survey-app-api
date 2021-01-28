@@ -1,11 +1,11 @@
 name: Admin microservice deployment
 
-on: 
+on:
   push:
-    branches:
-      - "prod"
     paths:
       - "admins/*"
+    branches:
+      - "prod"
 
 # Environment variables available to all jobs and steps in this workflow
 env:
