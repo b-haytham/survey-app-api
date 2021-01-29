@@ -1,4 +1,4 @@
-//this is a comment to test github action
+//this is a comment to test github actions
 import app from './app';
 import mongoose from 'mongoose';
 import { natsWrapper } from './NatsWrapper';
